@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pusher Test</title>
+  <!-- Load Pusher library -->
+  <script src="https://cdn.jsdelivr.net/npm/pusher@7.2.3/dist/web/pusher.min.js"></script>
+</head>
+<body>
+  <h1>Pusher Test</h1>
+  <div id="notifications"></div>
+  
+  <script>
+    // Initialize Pusher
+    const pusher = new Pusher('cdc7f81cbfe136693a07', {
+      cluster: 'ap2',
+      encrypted: true
+    });
+
+    // Subscribe to the channel
+    const channel = pusher.subscribe('notifications');
+
+    // Bind to the event
+    channel.bind('sos-alert', function(data) {
+      const notificationsDiv = document.getElementById('notifications');
+      notificationsDiv.innerHTML += `<p>${data.message}</p>`;
+    });
+
+    console.log('Pusher client initialized and listening for notifications...');
+  </script>
+</body>
+</html>
